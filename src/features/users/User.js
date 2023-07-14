@@ -1,48 +1,37 @@
-import { useGetUsersQuery } from "./usersApiSlice"
-import User from './User'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from 'react-router-dom'
 
-const UsersList = () => {
+import { useSelector } from 'react-redux'
+import { selectUserById } from './usersApiSlice'
 
-    const {
-        data: users,
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    } = useGetUsersQuery()
+const User = ({ userId }) => {
+    const user = useSelector(state => selectUserById(state, userId))
 
-    let content
+    const navigate = useNavigate()
 
-    if (isLoading) content = <p>Loading...</p>
+    if (user) {
+        const handleEdit = () => navigate(`/dash/users/${userId}`)
 
-    if (isError) {
-        content = <p className="errmsg">{error?.data?.message}</p>
-    }
+        const userRolesString = user.roles.toString().replaceAll(',', ', ')
 
-    if (isSuccess) {
+        const cellStatus = user.active ? '' : 'table__cell--inactive'
 
-        const { ids } = users
-
-        const tableContent = ids?.length
-            ? ids.map(userId => <User key={userId} userId={userId} />)
-            : null
-
-        content = (
-            <table className="table table--users">
-                <thead className="table__thead">
-                    <tr>
-                        <th scope="col" className="table__th user__username">Username</th>
-                        <th scope="col" className="table__th user__roles">Roles</th>
-                        <th scope="col" className="table__th user__edit">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tableContent}
-                </tbody>
-            </table>
+        return (
+            <tr className="table__row user">
+                <td className={`table__cell ${cellStatus}`}>{user.username}</td>
+                <td className={`table__cell ${cellStatus}`}>{userRolesString}</td>
+                <td className={`table__cell ${cellStatus}`}>
+                    <button
+                        className="icon-button table__button"
+                        onClick={handleEdit}
+                    >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                </td>
+            </tr>
         )
-    }
 
-    return content
+    } else return null
 }
-export default UsersList
+export default User
