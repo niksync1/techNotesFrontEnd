@@ -18,12 +18,14 @@ const NewNoteForm = ({ users }) => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [userId, setUserId] = useState(users[0].id)
+    const [category, setCategory] = useState('')
 
     useEffect(() => {
         if (isSuccess) {
             setTitle('')
             setText('')
             setUserId('')
+            setCategory('')
             navigate('/dash/notes')
         }
     }, [isSuccess, navigate])
@@ -31,13 +33,14 @@ const NewNoteForm = ({ users }) => {
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
+    const onCategoryChanged = e => setCategory(e.target.value)
 
-    const canSave = [title, text, userId].every(Boolean) && !isLoading
+    const canSave = [title, text, userId, category].every(Boolean) && !isLoading
 
     const onSaveNoteClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
-            await addNewNote({ user: userId, title, text })
+            await addNewNote({ user: userId, title, text, category })
         }
     }
 
@@ -94,7 +97,7 @@ const NewNoteForm = ({ users }) => {
                 />
 
                 <label className="form__label form__checkbox-container" htmlFor="username">
-                    ASSIGNED TO:</label>
+                    Assigned To:</label>
                 <select
                     id="username"
                     name="username"
@@ -104,7 +107,21 @@ const NewNoteForm = ({ users }) => {
                 >
                     {options}
                 </select>
-
+                <label className="form__label form__checkbox-container" htmlFor="category">
+                Category:</label>
+                <select 
+                    id="category"
+                    name="category"
+                    className="form__select"
+                    onChange={onCategoryChanged}
+                    value={category}
+                        >
+                    <option value="">"---"</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="mobile phone">Mobile phone</option>
+                    <option value="monitor">Monitor</option>
+                    <option value="printer">Printer</option>
+              </select>
             </form>
         </>
     )
