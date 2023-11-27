@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import useTitle from '../../hooks/useTitle'
-
+import NotesList from '../notes/NotesList'
 const Welcome = () => {
 
     const { username, isManager, isAdmin } = useAuth()
@@ -18,7 +18,7 @@ const Welcome = () => {
 
             <h1>Welcome {username}!</h1>
 
-            <p><Link to="/dash/notes">View techNotes</Link></p>
+            <NotesList />          
 
             <p><Link to="/dash/notes/new">Add New techNote</Link></p>
 

@@ -28,6 +28,8 @@ const EditNoteForm = ({ note, users }) => {
     const [text, setText] = useState(note.text)
     const [completed, setCompleted] = useState(note.completed)
     const [userId, setUserId] = useState(note.user)
+    const [category, setCategory] = useState('laptop')
+
 
     useEffect(() => {
 
@@ -35,6 +37,7 @@ const EditNoteForm = ({ note, users }) => {
             setTitle('')
             setText('')
             setUserId('')
+            setCategory('')
             navigate('/dash/notes')
         }
 
@@ -44,12 +47,13 @@ const EditNoteForm = ({ note, users }) => {
     const onTextChanged = e => setText(e.target.value)
     const onCompletedChanged = e => setCompleted(prev => !prev)
     const onUserIdChanged = e => setUserId(e.target.value)
+    const onCategoryChanged = e => setCategory(e.target.value)
 
     const canSave = [title, text, userId].every(Boolean) && !isLoading
 
     const onSaveNoteClicked = async (e) => {
         if (canSave) {
-            await updateNote({ id: note.id, user: userId, title, text, completed })
+            await updateNote({ id: note.id, user: userId, title, text, completed, category })
         }
     }
 
@@ -155,6 +159,20 @@ const EditNoteForm = ({ note, users }) => {
                         >
                             {options}
                         </select>
+                        <label className="form__label form__checkbox-container" htmlFor="category">
+                        Category:</label>
+                        <select 
+                            id="category"
+                            name="category"
+                            className="form__select"
+                            onChange={onCategoryChanged}
+                            value={category}
+                                >
+                            <option value="laptop">Laptop</option>
+                            <option value="mobile phone">Mobile phone</option>
+                            <option value="monitor">Monitor</option>
+                            <option value="printer">Printer</option>
+                      </select>
                     </div>
                     <div className="form__divider">
                         <p className="form__created">Created:<br />{created}</p>

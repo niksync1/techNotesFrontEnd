@@ -199,7 +199,7 @@ tr {
   font-size: 1rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  /* grid-template-columns: 1fr 2fr 1fr; */
   color: var(--TABLE-COLOR);
   gap: 0.1em;
 }
@@ -211,7 +211,7 @@ tr {
 }
 
 .table__thead {
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 1;
 }
@@ -235,11 +235,19 @@ tr {
 
 /* ||  NOTE */
 
-.note__created,
+/* .note__created,
 .note__updated,
+.note__category,
 .note__username {
   display: none;
-}
+} */
+
+.note__created,
+.note__updated,
+/* .note__category, */
+.note__username {
+    display: block
+  }
 
 .note__status {
   font-weight: bold;
@@ -290,7 +298,7 @@ tr {
 }
 
 .form__input--text {
-  min-height: 150px;
+  min-height: 120px;
 }
 
 .form__input--incomplete {
@@ -366,11 +374,7 @@ tr {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }
 
-  .note__created,
-  .note__updated,
-  .note__username {
-    display: block
-  }
+  
 
   .form__action-buttons {
     position: static;
