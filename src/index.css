@@ -329,7 +329,7 @@ tr {
   gap: 0.5em;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   h1 {
     font-size: 2rem;
   }
@@ -340,6 +340,15 @@ tr {
 
   .icon-button {
     font-size: 1.5rem;
+  }
+   .table--notes,.table--users {
+    grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
+  }
+
+  .note__created,
+  .note__category,
+  .note__username {
+    display: block
   }
 }
 
